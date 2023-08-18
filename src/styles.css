@@ -57,3 +57,7 @@ color: white;
 a {
 color: white;
 }
+
+.card h5 {
+  font-size: 14px;
+}
