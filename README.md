@@ -1,6 +1,6 @@
 # EmployeeFrontend
 
-![Alt Text](./src/assets/1692615325828_videoDownload.mp4)
+![Alt Text](./src/assets/1692615325828_gif.gif)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
 
