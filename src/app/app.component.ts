@@ -13,6 +13,8 @@ import { NgForm } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
   public employees: Employee[]= [];
+  public editEmployee: Employee | null = null;
+  deleteEmployee: Employee | null = null;
 
 
   constructor(private employeeService: EmployeeService){}
@@ -46,9 +48,11 @@ export class AppComponent implements OnInit {
         button.setAttribute('data-target', '#addEmployeeModal');
       }
       if (mode === 'edit') {
+        this.editEmployee = employee;
         button.setAttribute('data-target', '#updateEmployeeModal');
       }
       if (mode === 'delete') {
+        this.deleteEmployee = employee;
         button.setAttribute('data-target', '#deleteEmployeeModal');
       }
 
@@ -65,12 +69,51 @@ export class AppComponent implements OnInit {
       (Response:Employee)=> {
         console.log(Response);
         this.getEmployees();
+        addForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        addForm.reset();
+      }
+    )
+  }
+
+  public onupdateEmployee(employee: Employee): void {
+    this.employeeService.updateEmployee(employee).subscribe (
+      (Response:Employee)=> {
+        console.log(Response);
+        this.getEmployees();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     )
   }
+
+  // public onDeleteEmployee(employeeId: number): void {
+  //   this.employeeService.deleteEmployee(employeeId).subscribe(
+  //     (response: void) => {
+  //       console.log(response);
+  //       this.getEmployees();
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       alert(error.message);
+  //     }
+  //   );
+  // }
+  public onDeleteEmployee(employeeId: number): void {
+    this.employeeService.deleteEmployee(employeeId).subscribe(
+      () => {
+        console.log("Employee deleted successfully.");
+        this.getEmployees(); // Refresh the employee list
+      },
+      (error: HttpErrorResponse) => {
+        console.error("Error deleting employee:", error);
+        alert("Error deleting employee. Please try again later.");
+      }
+    );
+  }
+
 
 
 
